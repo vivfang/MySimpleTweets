@@ -57,6 +57,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
             relativeDate = relativeDate.replace("ago", "");
+            relativeDate = relativeDate.replace(" sec.", "s");
             relativeDate = relativeDate.replace(" min.", "m");
             relativeDate = relativeDate.replace(" hr.", "h");
             relativeDate = relativeDate.replace(" days", "d");
@@ -87,4 +88,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             tvRelativeTime = (TextView) itemView.findViewById(R.id.tvRelativeTime);
         }
     }
+    public void clear() {
+        mTweets.clear();
+        notifyDataSetChanged();
+    }
+
 }
