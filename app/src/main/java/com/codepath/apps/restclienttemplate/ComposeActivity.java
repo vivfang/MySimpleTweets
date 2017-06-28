@@ -42,9 +42,10 @@ public class ComposeActivity extends AppCompatActivity {
         String replyTo = getIntent().getExtras().getString("tweetUser");
         client = TwitterApp.getRestClient();
         mEditText = (EditText) findViewById(etBody);
-        if(!replyTo.equals(""))
-            mEditText.setText("@"+replyTo+" ");
-        mEditText.setSelection(replyTo.length()+2);
+        if(!replyTo.equals("")) {
+            mEditText.setText("@" + replyTo + " ");
+            mEditText.setSelection(replyTo.length() + 2);
+        }
         mTextView = (TextView) findViewById(charCount);
         mEditText.addTextChangedListener(mTextEditorWatcher);
         username = (TextView) findViewById(R.id.tvUserName);

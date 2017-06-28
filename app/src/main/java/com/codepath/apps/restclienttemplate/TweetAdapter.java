@@ -57,6 +57,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         holder.tvRelativeTime.setText(getRelativeTimeAgo(tweet.createdAt));
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
         holder.favorite.setSelected(tweet.favorited);
+        holder.retweet.setSelected(tweet.retweeted);
         holder.reply.setTag(tweet.user.screenName);
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +74,36 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response){
                         holder.favorite.setSelected(true);
+                        Log.d("TwitterClient", response.toString());
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Log.d("TwitterClient", responseString);
+                        throwable.printStackTrace();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        Log.d("TwitterClient", errorResponse.toString());
+                        throwable.printStackTrace();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Log.d("TwitterClient", errorResponse.toString());
+                        throwable.printStackTrace();
+                    }
+                });
+            }
+        });
+        holder.retweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                client.retweet(tweet.uid, new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                        holder.retweet.setSelected(true);
                         Log.d("TwitterClient", response.toString());
                     }
 
@@ -131,6 +162,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         public TextView tvRelativeTime;
         public ImageView reply;
         public ImageView favorite;
+        public ImageView retweet;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -141,6 +173,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             tvRelativeTime = (TextView) itemView.findViewById(R.id.tvRelativeTime);
             reply = (ImageView) itemView.findViewById(R.id.reply);
             favorite = (ImageView) itemView.findViewById(R.id.favorite);
+            retweet = (ImageView) itemView.findViewById(R.id.retweet);
         }
     }
     public void clear() {
