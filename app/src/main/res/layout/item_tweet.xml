@@ -44,4 +44,14 @@
         android:layout_below="@+id/tvBody"
         android:layout_toEndOf="@+id/ivProfileImage"
         app:srcCompat="@drawable/twitter_reply" />
+
+    <ImageView
+        android:id="@+id/favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/reply"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentEnd="true"
+        android:baselineAlignBottom="false"
+        app:srcCompat="@drawable/ic_heart_twitter" />
 </RelativeLayout>

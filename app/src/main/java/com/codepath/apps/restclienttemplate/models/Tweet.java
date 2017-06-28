@@ -15,6 +15,7 @@ public class Tweet implements Parcelable {
     public long uid;
     public User user;
     public String createdAt;
+    public boolean favorited;
 
     public Tweet() {
         // Normal actions performed by class, since this is still a normal object!
@@ -25,6 +26,7 @@ public class Tweet implements Parcelable {
         tweet.uid = jsonObject.getLong("id");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.favorited = jsonObject.getBoolean("favorited");
         return tweet;
     }
 
@@ -39,6 +41,7 @@ public class Tweet implements Parcelable {
         dest.writeLong(this.uid);
         dest.writeParcelable(this.user, flags);
         dest.writeString(this.createdAt);
+        dest.writeByte(this.favorited ? (byte) 1 : (byte) 0);
     }
 
     protected Tweet(Parcel in) {
@@ -46,6 +49,7 @@ public class Tweet implements Parcelable {
         this.uid = in.readLong();
         this.user = in.readParcelable(User.class.getClassLoader());
         this.createdAt = in.readString();
+        this.favorited = in.readByte() != 0;
     }
 
     public static final Creator<Tweet> CREATOR = new Creator<Tweet>() {
