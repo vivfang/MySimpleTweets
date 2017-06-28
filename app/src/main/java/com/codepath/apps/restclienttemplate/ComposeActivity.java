@@ -8,9 +8,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -21,28 +24,75 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.codepath.apps.restclienttemplate.R.id.charCount;
 import static com.codepath.apps.restclienttemplate.R.id.etBody;
+import static com.codepath.apps.restclienttemplate.models.Tweet.fromJSON;
 
 public class ComposeActivity extends AppCompatActivity {
     private TwitterClient client;
     private Tweet tweet;
     private TextView mTextView;
     private EditText mEditText;
+    private TextView username;
+    private TextView handle;
+    private ImageView profpic;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+        String replyTo = getIntent().getExtras().getString("tweetUser");
         client = TwitterApp.getRestClient();
         mEditText = (EditText) findViewById(etBody);
+        if(!replyTo.equals(""))
+            mEditText.setText("@"+replyTo);
         mTextView = (TextView) findViewById(charCount);
         mEditText.addTextChangedListener(mTextEditorWatcher);
-    }
+        username = (TextView) findViewById(R.id.tvUserName);
+        handle = (TextView) findViewById(R.id.tvHandle);
+        profpic = (ImageView) findViewById(R.id.ivProfpic);
+        client.getUser(new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    user = User.fromJson(response);
+                    Log.i("ComposeActivity", user.name);
+                    username.setText(user.name);
+                    handle.setText("@"+user.screenName);
+                    Glide.with(profpic.getContext())
+                            .load(user.profileImageUrl)
+                            .into(profpic);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("TwitterClient", responseString);
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("TwitterClient", errorResponse.toString());
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                Log.d("TwitterClient", errorResponse.toString());
+                throwable.printStackTrace();
+            }
+        });
+    }
+    public void closeCompose(View v){
+        this.finish();
+    }
     public void onSubmit(View v) {
         client.sendTweet(mEditText.getText().toString(), new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    tweet = Tweet.fromJSON(response);
+                    tweet = fromJSON(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

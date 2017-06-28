@@ -6,10 +6,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -66,6 +66,7 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setAdapter(tweetAdapter);
         populateTimeline();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -74,15 +75,14 @@ public class TimelineActivity extends AppCompatActivity {
     }
     public void onComposeAction(MenuItem mi) {
         Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-        this.finish();
-        startActivity(i); // brings up the second activity
+        i.putExtra("tweetUser", "");
+        startActivityForResult(i, 1); // brings up the second activity
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         // check request code and result code first
-
         // Use data parameter
-        Tweet tweet = (Tweet) getIntent().getParcelableExtra("tweet");;
+        Tweet tweet = data.getParcelableExtra("tweet");
         tweets.add(0, tweet);
         tweetAdapter.notifyItemInserted(0);
         rvTweets.scrollToPosition(0);
@@ -149,5 +149,4 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
     }
-
 }
