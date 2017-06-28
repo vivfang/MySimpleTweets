@@ -43,6 +43,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvBody"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:onClick="replyCompose"
         app:srcCompat="@drawable/twitter_reply" />
 </RelativeLayout>

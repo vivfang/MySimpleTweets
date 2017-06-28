@@ -85,7 +85,8 @@ public class ComposeActivity extends AppCompatActivity {
         });
     }
     public void closeCompose(View v){
-        this.finish();
+        setResult(RESULT_CANCELED);
+        finish();
     }
     public void onSubmit(View v) {
         client.sendTweet(mEditText.getText().toString(), new JsonHttpResponseHandler(){

@@ -81,11 +81,13 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         // check request code and result code first
-        // Use data parameter
-        Tweet tweet = data.getParcelableExtra("tweet");
-        tweets.add(0, tweet);
-        tweetAdapter.notifyItemInserted(0);
-        rvTweets.scrollToPosition(0);
+        if (resultCode == RESULT_OK) {
+            // Use data parameter
+            Tweet tweet = data.getParcelableExtra("tweet");
+            tweets.add(0, tweet);
+            tweetAdapter.notifyItemInserted(0);
+            rvTweets.scrollToPosition(0);
+        }
     }
     private void populateTimeline(){
         client.getHomeTimeline(new JsonHttpResponseHandler(){

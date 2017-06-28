@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -12,10 +14,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 
 /**
  * Created by vf608 on 6/26/17.
@@ -23,7 +25,7 @@ import java.text.ParseException;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
     private List<Tweet> mTweets;
-    Context context;
+    private Context context;
     public TweetAdapter(List<Tweet>tweets){
         mTweets = tweets;
     }
@@ -39,12 +41,21 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Tweet tweet = mTweets.get(position);
         holder.tvUsername.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
         holder.tvRelativeTime.setText(getRelativeTimeAgo(tweet.createdAt));
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
+        holder.reply.setTag(tweet.user.screenName);
+        holder.reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, ComposeActivity.class);
+                i.putExtra("tweetUser", holder.reply.getTag().toString());
+                ((Activity)context).startActivityForResult(i, 1);
+            }
+        });
     }
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
@@ -78,6 +89,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         public TextView tvUsername;
         public TextView tvBody;
         public TextView tvRelativeTime;
+        public ImageView reply;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -86,11 +98,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvRelativeTime = (TextView) itemView.findViewById(R.id.tvRelativeTime);
+            reply = (ImageView) itemView.findViewById(R.id.reply);
         }
     }
     public void clear() {
         mTweets.clear();
         notifyDataSetChanged();
     }
+
 
 }
