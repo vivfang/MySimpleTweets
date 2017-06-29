@@ -31,8 +31,8 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
-    private List<Tweet> mTweets;
-    private Context context;
+    List<Tweet> mTweets;
+    Context context;
     private TwitterClient client;
     public TweetAdapter(List<Tweet>tweets){
         mTweets = tweets;
@@ -155,7 +155,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         return mTweets.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageView ivProfileImage;
         public TextView tvUsername;
         public TextView tvBody;
@@ -174,12 +174,21 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             reply = (ImageView) itemView.findViewById(R.id.reply);
             favorite = (ImageView) itemView.findViewById(R.id.favorite);
             retweet = (ImageView) itemView.findViewById(R.id.retweet);
+            itemView.setOnClickListener(this);
+        }
+        public void onClick(View v){
+            int position = getAdapterPosition();
+            if(position != RecyclerView.NO_POSITION){
+                Tweet tweet = mTweets.get(position);
+                Intent intent = new Intent(context, DetailTweetActivity.class);
+                intent.putExtra("tweet", tweet);
+                context.startActivity(intent);
+            }
         }
     }
     public void clear() {
         mTweets.clear();
         notifyDataSetChanged();
     }
-
 
 }
