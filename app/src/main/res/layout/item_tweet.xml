@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="5dp"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -27,6 +28,7 @@
         android:layout_below="@+id/tvUsername"
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:autoLink="all"
         android:text="TextView" />
 
     <TextView
@@ -61,8 +63,6 @@
         android:layout_below="@+id/tvBody"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="68dp"
-        android:layout_toEndOf="@+id/tvBody"
         app:srcCompat="@drawable/ic_rt_twitter" />
 
 </RelativeLayout>
