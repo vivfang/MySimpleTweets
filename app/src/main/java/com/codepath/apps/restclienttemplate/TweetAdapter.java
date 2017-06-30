@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,14 +58,49 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         holder.tvBody.setText(tweet.body);
         holder.tvRelativeTime.setText(getRelativeTimeAgo(tweet.createdAt));
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
+        holder.ivProfileImage.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                // custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setContentView(R.layout.message_item);
+                dialog.setTitle(tweet.user.name);
+
+                // set the custom dialog components - text, image and button
+                TextView followerCount = (TextView) dialog.findViewById(R.id.tvFollowerNum);
+                followerCount.setText(""+tweet.user.followers);
+                followerCount.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context, FollowerList.class);
+                        i.putExtra("tweetUser", tweet.user);
+                        (context).startActivity(i);
+                    }
+                });
+                TextView followingCount = (TextView) dialog.findViewById(R.id.tvFollowingNum);
+                followingCount.setText(""+tweet.user.following);
+                followingCount.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context, FollowingList.class);
+                        i.putExtra("tweetUser", tweet.user);
+                        (context).startActivity(i);
+                    }
+                });
+                dialog.show();
+            }
+        });
         holder.favorite.setSelected(tweet.favorited);
         holder.retweet.setSelected(tweet.retweeted);
-        holder.reply.setTag(tweet.user.screenName);
+        //holder.reply.setTag(tweet.user.screenName);
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, ComposeActivity.class);
-                i.putExtra("tweetUser", holder.reply.getTag().toString());
+                i.putExtra("tweetUser", tweet.user.screenName);
                 ((Activity)context).startActivityForResult(i, 1);
             }
         });
