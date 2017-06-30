@@ -40,9 +40,14 @@ public class DetailTweetActivity extends AppCompatActivity {
         TextView body = (TextView) findViewById(R.id.detailBody);
         TextView time = (TextView) findViewById(R.id.detailTime);
         ImageView profpic = (ImageView) findViewById(R.id.detailProfpic);
+        ImageView media = (ImageView) findViewById(R.id.ivMedia);
         name.setText(tweet.user.name);
         handle.setText("@"+tweet.user.screenName);
         body.setText(tweet.body);
+        if(tweet.mediaUrl != "") {
+            Glide.with(context).load(tweet.mediaUrl).into(media);
+            media.setVisibility(View.VISIBLE);
+        }
         Glide.with(context).load(tweet.user.profileImageUrl).bitmapTransform(new CropCircleTransformation(context)).into(profpic);
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
