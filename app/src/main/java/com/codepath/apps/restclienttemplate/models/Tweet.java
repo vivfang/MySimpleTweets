@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,7 +18,7 @@ public class Tweet implements Parcelable {
     public String createdAt;
     public boolean favorited;
     public boolean retweeted;
-    public int rts;
+    public String mediaUrl;
 
     public Tweet() {
         // Normal actions performed by class, since this is still a normal object!
@@ -30,6 +31,13 @@ public class Tweet implements Parcelable {
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.favorited = jsonObject.getBoolean("favorited");
         tweet.retweeted = jsonObject.getBoolean("retweeted");
+        JSONObject entities = jsonObject.getJSONObject("entities");
+        JSONArray media;
+        if(entities != null) {
+            media = entities.optJSONArray("media");
+            if (media != null)
+                tweet.mediaUrl = media.getJSONObject(0).getString("media_url");
+        }
         return tweet;
     }
 
@@ -46,6 +54,7 @@ public class Tweet implements Parcelable {
         dest.writeString(this.createdAt);
         dest.writeByte(this.favorited ? (byte) 1 : (byte) 0);
         dest.writeByte(this.retweeted ? (byte) 1 : (byte) 0);
+        dest.writeString(this.mediaUrl);
     }
 
     protected Tweet(Parcel in) {
@@ -55,6 +64,7 @@ public class Tweet implements Parcelable {
         this.createdAt = in.readString();
         this.favorited = in.readByte() != 0;
         this.retweeted = in.readByte() != 0;
+        this.mediaUrl = in.readString();
     }
 
     public static final Creator<Tweet> CREATOR = new Creator<Tweet>() {

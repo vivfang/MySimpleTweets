@@ -43,7 +43,7 @@
         android:id="@+id/reply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:layout_toEndOf="@+id/ivProfileImage"
         app:srcCompat="@drawable/twitter_reply" />
 
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:baselineAlignBottom="false"
         app:srcCompat="@drawable/ic_heart_twitter" />
 
@@ -60,9 +60,24 @@
         android:id="@+id/retweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         app:srcCompat="@drawable/ic_rt_twitter" />
+
+    <ImageView
+        android:id="@+id/ivMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="false"
+        android:layout_below="@+id/tvBody"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/logo_white" />
 
 </RelativeLayout>

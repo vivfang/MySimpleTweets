@@ -55,6 +55,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Tweet tweet = mTweets.get(position);
+        if(tweet.mediaUrl != "") {
+            Glide.with(context).load(tweet.mediaUrl).into(holder.media);
+            holder.media.setVisibility(View.VISIBLE);
+        }
         holder.tvUsername.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
         holder.tvRelativeTime.setText(getRelativeTimeAgo(tweet.createdAt));
@@ -201,6 +205,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         public ImageView reply;
         public ImageView favorite;
         public ImageView retweet;
+        public ImageView media;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -212,6 +217,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             reply = (ImageView) itemView.findViewById(R.id.reply);
             favorite = (ImageView) itemView.findViewById(R.id.favorite);
             retweet = (ImageView) itemView.findViewById(R.id.retweet);
+            media = (ImageView) itemView.findViewById(R.id.ivMedia);
             itemView.setOnClickListener(this);
         }
         public void onClick(View v){
