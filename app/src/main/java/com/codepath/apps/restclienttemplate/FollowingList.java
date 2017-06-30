@@ -25,7 +25,7 @@ public class FollowingList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follower_list);
+        setContentView(R.layout.activity_following_list);
         client = TwitterApp.getRestClient();
 
         rvUsers = (RecyclerView) findViewById(R.id.rvUser);
