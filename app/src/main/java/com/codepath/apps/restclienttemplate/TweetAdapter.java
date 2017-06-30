@@ -100,7 +100,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         });
         holder.favorite.setSelected(tweet.favorited);
         holder.retweet.setSelected(tweet.retweeted);
-        //holder.reply.setTag(tweet.user.screenName);
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +114,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
                 client.favoriteTweet(tweet.uid, new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                        tweet.favorited = true;
                         holder.favorite.setSelected(true);
                         Log.d("TwitterClient", response.toString());
                     }
@@ -145,6 +145,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
                 client.retweet(tweet.uid, new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                        tweet.retweeted = true;
                         holder.retweet.setSelected(true);
                         Log.d("TwitterClient", response.toString());
                     }

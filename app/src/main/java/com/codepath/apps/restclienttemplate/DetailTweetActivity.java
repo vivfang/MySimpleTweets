@@ -28,13 +28,14 @@ import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
 public class DetailTweetActivity extends AppCompatActivity {
     TwitterClient client;
+    Tweet tweet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_tweet);
         client = TwitterApp.getRestClient();
         final Context context = getContext();
-        final Tweet tweet = getIntent().getParcelableExtra("tweet");
+        tweet = getIntent().getParcelableExtra("tweet");
         TextView name = (TextView) findViewById(R.id.detailName);
         TextView handle = (TextView) findViewById(R.id.detailHandle);
         TextView body = (TextView) findViewById(R.id.detailBody);
@@ -64,17 +65,18 @@ public class DetailTweetActivity extends AppCompatActivity {
         time.setText(relativeDate);
 
         final ImageView rtBttn = (ImageView) findViewById(R.id.retweetButton);
+        final ImageView favBttn = (ImageView) findViewById(R.id.favoriteButton);
         final ImageView reBttn = (ImageView) findViewById(R.id.replyBttn);
-        reBttn.setTag(tweet.user.screenName);
+        favBttn.setSelected(tweet.favorited);
+        rtBttn.setSelected(tweet.retweeted);
         reBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, ComposeActivity.class);
-                i.putExtra("tweetUser", reBttn.getTag().toString());
+                i.putExtra("tweetUser", tweet.user.screenName);
                 startActivityForResult(i, 1);
             }
         });
-        final ImageView favBttn = (ImageView) findViewById(R.id.favoriteButton);
         rtBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +84,7 @@ public class DetailTweetActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response){
                         rtBttn.setSelected(true);
+                        tweet.retweeted = true;
                         Log.d("TwitterClient", response.toString());
                     }
 
@@ -112,6 +115,7 @@ public class DetailTweetActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response){
                         favBttn.setSelected(true);
+                        tweet.favorited = true;
                         Log.d("TwitterClient", response.toString());
                     }
 
@@ -135,5 +139,10 @@ public class DetailTweetActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+    @Override
+    public void onBackPressed(){
+        Intent i =  new Intent(DetailTweetActivity.this, TimelineActivity.class);
+        startActivity(i);
     }
 }
