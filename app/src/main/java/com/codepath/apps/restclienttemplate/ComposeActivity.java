@@ -21,9 +21,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.codepath.apps.restclienttemplate.R.id.charCount;
 import static com.codepath.apps.restclienttemplate.R.id.etBody;
+import static com.codepath.apps.restclienttemplate.R.layout.activity_compose;
 import static com.codepath.apps.restclienttemplate.models.Tweet.fromJSON;
 
 public class ComposeActivity extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
+        setContentView(activity_compose);
         String replyTo = getIntent().getExtras().getString("tweetUser");
         client = TwitterApp.getRestClient();
         mEditText = (EditText) findViewById(etBody);
@@ -61,6 +63,7 @@ public class ComposeActivity extends AppCompatActivity {
                     handle.setText("@"+user.screenName);
                     Glide.with(profpic.getContext())
                             .load(user.profileImageUrl)
+                            .bitmapTransform(new CropCircleTransformation(profpic.getContext()))
                             .into(profpic);
                 } catch (JSONException e) {
                     e.printStackTrace();

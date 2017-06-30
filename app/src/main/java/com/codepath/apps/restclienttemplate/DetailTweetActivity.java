@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
@@ -42,7 +43,7 @@ public class DetailTweetActivity extends AppCompatActivity {
         name.setText(tweet.user.name);
         handle.setText("@"+tweet.user.screenName);
         body.setText(tweet.body);
-        Glide.with(context).load(tweet.user.profileImageUrl).into(profpic);
+        Glide.with(context).load(tweet.user.profileImageUrl).bitmapTransform(new CropCircleTransformation(context)).into(profpic);
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         sf.setLenient(true);

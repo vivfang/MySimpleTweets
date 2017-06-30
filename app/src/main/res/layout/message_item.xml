@@ -41,7 +41,7 @@
         android:layout_alignEnd="@+id/tvFollowerCount"
         android:layout_alignStart="@+id/tvFollowerCount"
         android:layout_below="@+id/tvFollowerCount"
-
+        android:gravity="center"
         android:text="TextView"
         android:textColor="@color/twitter_blue"
         android:textSize="24sp" />

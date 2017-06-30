@@ -13,6 +13,8 @@ import com.codepath.apps.restclienttemplate.models.User;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
 /**
  * Created by vf608 on 6/26/17.
  */
@@ -41,7 +43,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
         final User user = mFollow.get(position);
         holder.tvUsername.setText(user.name);
         holder.tvScreename.setText("@"+user.screenName);
-        Glide.with(context).load(user.profileImageUrl).into(holder.ivProfileImage);
+        Glide.with(context).load(user.profileImageUrl).bitmapTransform(new CropCircleTransformation(context)).into(holder.ivProfileImage);
     }
     @Override
     public int getItemCount() {
