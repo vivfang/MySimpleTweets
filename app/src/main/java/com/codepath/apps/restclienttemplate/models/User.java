@@ -19,6 +19,7 @@ public class User implements Parcelable{
     public int tweets;
     public int followers;
     public int following;
+    public String tagLine;
 
     public static User fromJson(JSONObject json) throws JSONException {
         User user = new User();
@@ -29,6 +30,7 @@ public class User implements Parcelable{
         user.tweets = json.getInt("listed_count");
         user.followers = json.getInt("followers_count");
         user.following = json.getInt("friends_count");
+        user.tagLine = json.getString("description");
         return user;
     }
 
@@ -51,6 +53,7 @@ public class User implements Parcelable{
         dest.writeInt(this.tweets);
         dest.writeInt(this.followers);
         dest.writeInt(this.following);
+        dest.writeString(this.tagLine);
     }
 
     protected User(Parcel in) {
@@ -61,6 +64,7 @@ public class User implements Parcelable{
         this.tweets = in.readInt();
         this.followers = in.readInt();
         this.following = in.readInt();
+        this.tagLine = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

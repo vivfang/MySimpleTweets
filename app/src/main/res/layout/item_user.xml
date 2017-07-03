@@ -18,13 +18,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/tvScreename"
+        android:layout_alignStart="@+id/tvTagline"
         android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/tvScreename"
+        android:id="@+id/tvTagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvUsername"

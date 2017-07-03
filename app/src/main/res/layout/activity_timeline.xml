@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.apps.restclienttemplate.TimelineActivity">
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,19 +13,26 @@
         android:layout_height="wrap_content">
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeContainer"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTweet"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white"/>
+
+</LinearLayout>
+<!--RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codepath.apps.restclienttemplate.TimelineActivity">
 
     <TextView
         android:id="@+id/tvTimeline"
@@ -39,5 +45,11 @@
         android:text="Timeline"
         android:textColor="@color/white"
         android:textSize="28sp" />
+    <fragment
+        android:id="@+id/fragment_timeline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.codepath.apps.restclienttemplate.fragments.MentionsTimelineFragment">
+    </fragment>
 
-</RelativeLayout>
+</RelativeLayout-->

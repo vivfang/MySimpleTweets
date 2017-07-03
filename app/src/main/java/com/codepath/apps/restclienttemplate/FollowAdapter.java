@@ -60,7 +60,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
 
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
-            tvScreename = (TextView) itemView.findViewById(R.id.tvScreename);
+            tvScreename = (TextView) itemView.findViewById(R.id.tvTagline);
         }
     }
 
