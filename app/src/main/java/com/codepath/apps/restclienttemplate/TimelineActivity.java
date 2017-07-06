@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +23,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     private SwipeRefreshLayout swipeContainer;
     TweetsPagerAdapter tweetsPageAdapter;
+    int pagePosition;
 
 
     @Override
@@ -33,6 +33,17 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         tweetsPageAdapter = new TweetsPagerAdapter(getSupportFragmentManager(), this);
         vpPager.setAdapter(tweetsPageAdapter);
+        vpPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                if(position == 0)
+                    pagePosition = 0;
+                else
+                    pagePosition = 1;
+            }
+        });
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -48,7 +59,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                fetchTimelineAsync(tweetsPageAdapter.getCurrentPage());
+                fetchTimelineAsync(pagePosition);
             }
         });
         // Configure the refreshing colors
@@ -104,7 +115,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         Tweet tweet = data.getParcelableExtra("tweet");
-        Log.i("onAcitivityResult", tweet.body);
         TweetsListFragment homeTimelineFragment = tweetsPageAdapter.getItem(0);
         homeTimelineFragment.addTweet(tweet);
     }

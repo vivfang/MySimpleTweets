@@ -13,7 +13,6 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     private HomeTimelineFragment homeTimelineFragment;
     private MentionsTimelineFragment mentionsTimelineFragment;
-    private int currentPage;
 
     public TweetsPagerAdapter(FragmentManager fm, Context context){
         super(fm);
@@ -26,19 +25,14 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public TweetsListFragment getItem(int position) {
-        if(position == 0) {
-            if(homeTimelineFragment == null) {
+        if(position == 0){
+            if(homeTimelineFragment == null)
                 homeTimelineFragment = new HomeTimelineFragment();
-                currentPage = 0;
-            }
-            currentPage = 0;
             return homeTimelineFragment;
         }
         else if (position == 1) {
             if(mentionsTimelineFragment == null)
                 mentionsTimelineFragment = new MentionsTimelineFragment();
-            else
-                currentPage = 1;
             return mentionsTimelineFragment;
         }
         else
@@ -50,5 +44,4 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
         return tabTitles[position];
     }
 
-    public int getCurrentPage(){ return currentPage; }
 }
