@@ -91,6 +91,14 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, handler);
 	}
 
+    public void unfavoriteTweet(Long uid, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("favorites/destroy.json?id="+uid);
+        // Can specify query string params directly or through RequestParams.
+        RequestParams params = new RequestParams();
+        params.put("UID", uid);
+        client.post(apiUrl, params, handler);
+    }
+
 	public void retweet(Long uid, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl(String.format("statuses/retweet/%s.json", uid));
 		// Can specify query string params directly or through RequestParams.
@@ -98,6 +106,14 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("UID", uid);
 		client.post(apiUrl, params, handler);
 	}
+
+    public void unretweet(Long uid, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("statuses/unretweet/%s.json", uid));
+        // Can specify query string params directly or through RequestParams.
+        RequestParams params = new RequestParams();
+        params.put("UID", uid);
+        client.post(apiUrl, params, handler);
+    }
 
 	public void getFollowers(Long uid, AsyncHttpResponseHandler handler){
 		String apiUrl = getApiUrl("followers/list.json");
@@ -114,4 +130,11 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("count", 200);
 		client.get(apiUrl, params, handler);
 	}
+
+    public void searchTweets(String q, AsyncHttpResponseHandler handler){
+        String apiUrl = getApiUrl("search/tweets.json");
+        RequestParams params = new RequestParams();
+        params.put("q", q);
+        client.get(apiUrl, params, handler);
+    }
 }

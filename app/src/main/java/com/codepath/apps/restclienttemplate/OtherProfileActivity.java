@@ -1,9 +1,11 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,12 +17,13 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class OtherProfileActivity extends AppCompatActivity {
     TwitterClient client;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_profile);
 
-        User user = getIntent().getParcelableExtra("user");
+        user = getIntent().getParcelableExtra("user");
         UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance(user.screenName);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, userTimelineFragment);
@@ -48,5 +51,16 @@ public class OtherProfileActivity extends AppCompatActivity {
         tvFollowers.setText("" + user.followers + " Followers");
         tvFollowing.setText("" + user.following + " Following");
         tvTagline.setText(user.tagLine);
+    }
+    public void openFollower(View v){
+        Intent i = new Intent(OtherProfileActivity.this, FollowerList.class);
+        i.putExtra("tweetUser", user);
+        startActivity(i);
+    }
+
+    public void openFollowing(View v){
+        Intent i = new Intent(OtherProfileActivity.this, FollowingList.class);
+        i.putExtra("tweetUser", user);
+        startActivity(i);
     }
 }

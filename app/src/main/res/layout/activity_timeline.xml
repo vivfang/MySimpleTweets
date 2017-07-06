@@ -19,6 +19,12 @@
         android:layout_height="wrap_content"
         app:tabMode="fixed" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
@@ -26,30 +32,6 @@
         android:layout_weight="1"
         android:background="@android:color/white"/>
 
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>
-<!--RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.codepath.apps.restclienttemplate.TimelineActivity">
-
-    <TextView
-        android:id="@+id/tvTimeline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Timeline"
-        android:textColor="@color/white"
-        android:textSize="28sp" />
-    <fragment
-        android:id="@+id/fragment_timeline"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.codepath.apps.restclienttemplate.fragments.MentionsTimelineFragment">
-    </fragment>
-
-</RelativeLayout-->

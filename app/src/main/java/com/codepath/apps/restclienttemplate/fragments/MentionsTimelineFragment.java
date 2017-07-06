@@ -19,7 +19,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class MentionsTimelineFragment extends TweetsListFragment {
     private TwitterClient client;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +56,10 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                 throwable.printStackTrace();
             }
         });
-
+    }
+    public void refresh() {
+        Log.i("refresh", "refreshing");
+        tweetAdapter.clear();
+        populateTimeline();
     }
 }

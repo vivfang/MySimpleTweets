@@ -59,4 +59,11 @@ public class HomeTimelineFragment extends TweetsListFragment {
         });
 
     }
+    public void refresh() {
+        Log.i("refresh", "refreshing");
+        tweetAdapter.clear();
+        Log.i("refresh", "refreshing2");
+        populateTimeline();
+        Log.i("refresh", "refreshing3");
+    }
 }

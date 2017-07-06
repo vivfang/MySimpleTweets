@@ -1,9 +1,11 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
     TwitterClient client;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    User user = User.fromJson(response);
+                    user = User.fromJson(response);
                     getSupportActionBar().setTitle("@"+user.screenName);
                     populateUserTimeline(user);
                 } catch (JSONException e) {
@@ -65,5 +68,17 @@ public class ProfileActivity extends AppCompatActivity {
         tvFollowers.setText("" + user.followers + " Followers");
         tvFollowing.setText("" + user.following + " Following");
         tvTagline.setText(user.tagLine);
+    }
+
+    public void openFollower(View v){
+        Intent i = new Intent(ProfileActivity.this, FollowerList.class);
+        i.putExtra("tweetUser", user);
+        startActivity(i);
+    }
+
+    public void openFollowing(View v){
+        Intent i = new Intent(ProfileActivity.this, FollowingList.class);
+        i.putExtra("tweetUser", user);
+        startActivity(i);
     }
 }

@@ -39,7 +39,8 @@
         <activity android:name=".FollowerList" />
         <activity android:name=".FollowingList" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".OtherProfileActivity"></activity>
+        <activity android:name=".OtherProfileActivity" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

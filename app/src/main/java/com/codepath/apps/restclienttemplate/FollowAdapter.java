@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder>{
     List<User> mFollow;
     Context context;
-    private TwitterClient client;
+
     public FollowAdapter(List<User>users){
         mFollow = users;
     }
@@ -31,10 +32,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View userView = inflater.inflate(R.layout.item_user, parent, false);
         ViewHolder viewHolder = new ViewHolder(userView);
-        client = TwitterApp.getRestClient();
         return viewHolder;
     }
 
@@ -61,6 +60,16 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvScreename = (TextView) itemView.findViewById(R.id.tvTagline);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Intent i = new Intent(context, OtherProfileActivity.class);
+                    User user = mFollow.get(position);
+                    i.putExtra("user", user);
+                    context.startActivity(i);
+                }
+            });
         }
     }
 

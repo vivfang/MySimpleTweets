@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAdapterListener{
 
+
     public interface TweetSelectedListener{
         public void onTweetSelected(Tweet tweet);
     }
@@ -31,16 +33,19 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragments_tweets_list, container, false);
+        v = inflater.inflate(R.layout.fragments_tweets_list, container, false);
         rvTweets = (RecyclerView) v.findViewById(R.id.rvTweet);
         tweets = new ArrayList<>();
         tweetAdapter = new TweetAdapter(tweets, this);
         rvTweets.setLayoutManager(new LinearLayoutManager(getContext()));
         rvTweets.setAdapter(tweetAdapter);
+        // Setup refresh listener which triggers new data loading
+
         return v;
     }
 
@@ -61,4 +66,12 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
         Tweet tweet = tweets.get(position);
         ((TweetSelectedListener) getActivity()).onTweetSelected(tweet);
     }
+
+    public void addTweet(Tweet tweet){
+        Log.i("addTweet", tweet.body);
+        tweets.add(0, tweet);
+        tweetAdapter.notifyItemInserted(0);
+        rvTweets.scrollToPosition(0);
+    }
+
 }

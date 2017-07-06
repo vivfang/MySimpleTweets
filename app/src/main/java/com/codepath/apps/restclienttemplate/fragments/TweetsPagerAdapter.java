@@ -1,7 +1,6 @@
 package com.codepath.apps.restclienttemplate.fragments;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -12,6 +11,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class TweetsPagerAdapter extends FragmentPagerAdapter {
     private String tabTitles[] = new String[] {"Home", "Mentions"};
     private Context context;
+    private HomeTimelineFragment homeTimelineFragment;
+    private MentionsTimelineFragment mentionsTimelineFragment;
+    private int currentPage;
 
     public TweetsPagerAdapter(FragmentManager fm, Context context){
         super(fm);
@@ -23,11 +25,19 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
-        if(position == 0)
-            return new HomeTimelineFragment();
-        else if (position == 1)
-            return new MentionsTimelineFragment();
+    public TweetsListFragment getItem(int position) {
+        if(position == 0) {
+            if(homeTimelineFragment == null)
+                homeTimelineFragment = new HomeTimelineFragment();
+            currentPage = 0;
+            return homeTimelineFragment;
+        }
+        else if (position == 1) {
+            if(mentionsTimelineFragment == null)
+                mentionsTimelineFragment = new MentionsTimelineFragment();
+            currentPage = 1;
+            return mentionsTimelineFragment;
+        }
         else
             return null;
     }
@@ -36,4 +46,6 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabTitles[position];
     }
+
+    public int getCurrentPage(){ return currentPage; }
 }

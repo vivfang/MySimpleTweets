@@ -19,6 +19,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class UserTimelineFragment extends TweetsListFragment {
     private TwitterClient client;
+
     public static UserTimelineFragment newInstance(String screenName){
         UserTimelineFragment userTimelineFragment = new UserTimelineFragment();
         Bundle args = new Bundle();
