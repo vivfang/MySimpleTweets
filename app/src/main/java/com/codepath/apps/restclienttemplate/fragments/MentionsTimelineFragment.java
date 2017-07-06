@@ -58,8 +58,9 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         });
     }
     public void refresh() {
-        Log.i("refresh", "refreshing");
+        Log.i("refresh2", "refreshing");
         tweetAdapter.clear();
+        Log.i("refresh2", "refreshing");
         populateTimeline();
     }
 }

@@ -275,6 +275,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         Log.i("tweetAdapter", "clear");
         mTweets.clear();
         notifyDataSetChanged();
+        Log.i("tweetAdapter", "clear2");
     }
 
 }
